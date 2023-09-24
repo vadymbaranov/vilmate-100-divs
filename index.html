@@ -59,10 +59,14 @@
             );
 
         for (let i = 1; i <= 100; i++) {
+            // Create div element
             let div = document.createElement('div');
+
+            // Slicing condition
             let wordCount = i > 12 ? 12 : i;
             div.textContent =
                 'Div ' + i + ' - ' + lorem.slice(0, wordCount).join(' ');
+
             div.classList.add('block');
             div.id = `div-${i}`;
             div.style.transition = 'all 0.5s ease-in-out';
@@ -75,7 +79,7 @@
             div.style.transform = `translateY(${100 * (i - 1)}px)`;
         }
 
-        function manageDivOrder(div, id) {
+        function manageDivOrder(div) {
             if (div.classList.contains('selected')) {
                 // Remove div from clicked list
                 div.classList.remove('selected');
@@ -86,18 +90,26 @@
                 clickedOrder.push(div);
             }
 
-            // Reset all positions
+            // Reset all positions and move selected divs to the top in DOM
             for (let i = 0; i < clickedOrder.length; i++) {
                 let div = clickedOrder[i];
-                div.style.transform = `translateY(${100 * i}px)`;
+                body.appendChild(div);
+
+                // Allow a slight delay for the translate operation in order for the transition to work properly
+                setTimeout(function () {
+                    div.style.transform = `translateY(${100 * i}px)`;
+                }, 1);
             }
 
             let y = clickedOrder.length;
             for (let i = 0; i < divs.length; i++) {
                 let div = divs[i];
                 if (!div.classList.contains('selected')) {
-                    div.style.transform = `translateY(${100 * y}px)`;
-                    y++;
+                    body.appendChild(div);
+                    setTimeout(function () {
+                        div.style.transform = `translateY(${100 * y}px)`;
+                        y++;
+                    }, 1);
                 }
             }
         }
