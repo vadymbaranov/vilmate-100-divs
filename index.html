@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+        />
+        <title>100 div's test task</title>
+        <style>
+            html,
+            body {
+                height: 100%;
+                max-width: 1000px;
+                width: 100%;
+                margin: 0 auto;
+                overflow: auto;
+            }
+
+            #container {
+                position: relative;
+            }
+
+            .block {
+                position: absolute;
+                width: 100%;
+                height: 100px;
+                line-height: 100px;
+                text-align: center;
+                border: 1px solid #000;
+                transition: all 0.3s ease-in-out;
+                white-space: wrap;
+                cursor: pointer;
+            }
+
+            .selected {
+                background-color: #dce0e5;
+            }
+        </style>
+    </head>
+    <body id="container"></body>
+
+    <script
+        defer
+        type="text/javascript"
+    >
+        var body = document.getElementById('container');
+        var divs = [];
+        var originalOrder = [];
+        var clickedOrder = [];
+
+        var lorem =
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel dapibus augue. Phasellus in finibus lorem.'.split(
+                ' '
+            );
+
+        for (let i = 1; i <= 100; i++) {
+            let div = document.createElement('div');
+            let wordCount = i > 12 ? 12 : i;
+            div.textContent =
+                'Div ' + i + ' - ' + lorem.slice(0, wordCount).join(' ');
+            div.classList.add('block');
+            div.id = `div-${i}`;
+            div.style.transition = 'all 0.5s ease-in-out';
+            div.onclick = function () {
+                manageDivOrder(div, i);
+            };
+            divs.push(div);
+            originalOrder.push(div);
+            body.appendChild(div);
+            div.style.transform = `translateY(${100 * (i - 1)}px)`;
+        }
+
+        function manageDivOrder(div, id) {
+            if (div.classList.contains('selected')) {
+                // Remove div from clicked list
+                div.classList.remove('selected');
+                clickedOrder.splice(clickedOrder.indexOf(div), 1);
+            } else {
+                // Add div to clicked list
+                div.classList.add('selected');
+                clickedOrder.push(div);
+            }
+
+            // Reset all positions
+            for (let i = 0; i < clickedOrder.length; i++) {
+                let div = clickedOrder[i];
+                div.style.transform = `translateY(${100 * i}px)`;
+            }
+
+            let y = clickedOrder.length;
+            for (let i = 0; i < divs.length; i++) {
+                let div = divs[i];
+                if (!div.classList.contains('selected')) {
+                    div.style.transform = `translateY(${100 * y}px)`;
+                    y++;
+                }
+            }
+        }
+    </script>
+</html>
