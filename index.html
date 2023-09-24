@@ -48,12 +48,12 @@
         defer
         type="text/javascript"
     >
-        var body = document.getElementById('container');
-        var divs = [];
-        var originalOrder = [];
-        var clickedOrder = [];
+        let body = document.getElementById('container');
+        let divs = [];
+        let originalOrder = [];
+        let clickedOrder = [];
 
-        var lorem =
+        const lorem =
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel dapibus augue. Phasellus in finibus lorem.'.split(
                 ' '
             );
@@ -70,7 +70,7 @@
             div.classList.add('block');
             div.id = `div-${i}`;
             div.style.transition = 'all 0.5s ease-in-out';
-            div.onclick = function () {
+            div.onclick = () => {
                 manageDivOrder(div, i);
             };
             divs.push(div);
@@ -96,7 +96,7 @@
                 body.appendChild(div);
 
                 // Allow a slight delay for the translate operation in order for the transition to work properly
-                setTimeout(function () {
+                setTimeout(() => {
                     div.style.transform = `translateY(${100 * i}px)`;
                 }, 1);
             }
@@ -106,7 +106,7 @@
                 let div = divs[i];
                 if (!div.classList.contains('selected')) {
                     body.appendChild(div);
-                    setTimeout(function () {
+                    setTimeout(() => {
                         div.style.transform = `translateY(${100 * y}px)`;
                         y++;
                     }, 1);
