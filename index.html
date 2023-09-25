@@ -87,7 +87,7 @@
             } else {
                 // Add div to clicked list
                 div.classList.add('selected');
-                clickedOrder.push(div);
+                clickedOrder.unshift(div);
             }
 
             // Reset all positions and move selected divs to the top in DOM
